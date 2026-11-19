@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-Second Reading Challenge</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 16px 48px;
+  background: #f4f6f8;
+  color: #202733;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+}
+
+main {
+  width: min(860px, 100%);
+  margin: auto;
+}
+
+section {
+  background: white;
+  border: 1px solid #e3e7ec;
+  border-radius: 16px;
+  padding: clamp(20px, 4vw, 32px);
+  margin-bottom: 22px;
+  box-shadow: 0 5px 20px rgba(25,40,60,.05);
+}
+
+.eyebrow {
+  display: inline-block;
+  color: #087f5b;
+  background: #e7f7f0;
+  border-radius: 30px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+h2 {
+  margin: 0 0 14px;
+  font-size: clamp(22px,4vw,28px);
+}
+
+h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+p {
+  margin: 0 0 14px;
+  font-size: 17px;
+}
+
+.timer-box {
+  margin-top: 20px;
+  padding: 18px;
+  text-align: center;
+  background: #f0f2f4;
+  border-radius: 12px;
+}
+
+#timer {
+  color: #0a9b62;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.timer-note {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.timer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 18px;
+  background: #087f5b;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #066649;
+}
+
+button.secondary {
+  background: #e9edf1;
+  color: #26313d;
+}
+
+button.secondary:hover {
+  background: #dce2e8;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.instruction {
+  color: #56616d;
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+}
+
+.cue-card {
+  position: relative;
+  min-height: 126px;
+  padding: 16px;
+  border: 2px solid #e2e6eb;
+  border-radius: 13px;
+  cursor: pointer;
+  background: white;
+  transition: .15s;
+}
+
+.cue-card:hover {
+  border-color: #8ab9a8;
+}
+
+.cue-card.selected {
+  border-color: #087f5b;
+  background: #effaf5;
+}
+
+.cue-card.correct {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.cue-card.incorrect {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.cue-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.number {
+  display: block;
+  color: #687482;
+  font-size: 25px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+  padding-right: 18px;
+}
+
+.tick {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #aab3bd;
+  border-radius: 50%;
+}
+
+.selected .tick {
+  background: #087f5b;
+  border-color: #087f5b;
+}
+
+.cue-card.correct .tick {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.cue-card.incorrect .tick {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.selected .tick:after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(-45deg);
+  margin: 5px 0 0 4px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 12px;
+}
+
+#selectedCount {
+  color: #087f5b;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#feedback {
+  margin-top: 14px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.steps {
+  padding-left: 24px;
+  margin-bottom: 22px;
+}
+
+.steps li {
+  margin-bottom: 12px;
+  padding-left: 4px;
+  font-size: 16px;
+}
+
+.benefits {
+  padding-left: 22px;
+}
+
+.benefits li {
+  margin-bottom: 9px;
+}
+
+.remember {
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f0f2f4;
+  text-align: center;
+}
+
+.remember strong {
+  display: block;
+  color: #087f5b;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.remember span {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+@media(max-width:560px) {
+  body {
+    padding: 14px 10px 32px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cue-card {
+    min-height: 104px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main>
+
+<!-- READING PASSAGE -->
+<section>
+  <span class="eyebrow">30-Second Skimming Challenge</span>
+  <h2>A Day Without the Internet</h2>
+
+  <p>
+  Imagine waking up one morning and discovering that the internet is completely offline. You cannot check social media, stream videos, send messages, or look up information for university assignments. For modern students, this unexpected interruption would feel disorienting because digital connectivity has become deeply integrated into everyday learning and daily communication.
+  </p>
+
+  <p>
+  Students routinely rely on digital platforms to attend virtual lectures, coordinate group projects, submit coursework online, and access vast academic research databases. However, spending excessive hours online can also fragment attention spans, increase procrastination, and diminish valuable study time. Without digital distractions, students might rediscover the benefits of reading physical books, engaging in meaningful face-to-face conversations, and efficiently clearing pending tasks. While digital technology undeniably enhances educational convenience, establishing a healthy balance between online productivity and offline personal well-being remains essential.
+  </p>
+
+  <div class="timer-box">
+    <div id="timer">30 SECONDS</div>
+
+    <p class="timer-note" id="timerNote">
+      Read quickly. Focus on key ideas, not every word!
+    </p>
+
+    <div class="timer-actions">
+      <button id="startBtn" type="button">Start reading</button>
+      <button id="resetBtn" class="secondary" type="button">Restart timer</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- CUE CARDS -->
+<section>
+  <h2>Choose the Correct Cue Cards</h2>
+
+  <p class="instruction">
+    After skimming the passage for 30 seconds, select all cards that represent main topics discussed in the text. Beware of distractor options!
+  </p>
+
+  <div class="card-footer">
+    <h3>Choose the cards</h3>
+    <span id="selectedCount">0 selected</span>
+  </div>
+
+  <div class="card-grid" id="cardGrid">
+    <label class="cue-card">
+      <input type="checkbox" value="1">
+      <span class="number">01</span>
+      <span class="card-text">Internet in Students' Daily Lives</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="2">
+      <span class="number">02</span>
+      <span class="card-text">Online Classes and Academic Resources</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="3">
+      <span class="number">03</span>
+      <span class="card-text">The Negative Effects of Excessive Internet Use</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="4">
+      <span class="number">04</span>
+      <span class="card-text">The History of Social Media</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="5">
+      <span class="number">05</span>
+      <span class="card-text">Offline Activities and Face-to-Face Communication</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="6">
+      <span class="number">06</span>
+      <span class="card-text">How to Become a Professional YouTuber</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="7">
+      <span class="number">07</span>
+      <span class="card-text">Maintaining a Balance Between Online and Offline Life</span>
+      <span class="tick"></span>
+    </label>
+
+    <label class="cue-card">
+      <input type="checkbox" value="8">
+      <span class="number">08</span>
+      <span class="card-text">The Best Smartphone Brands for Students</span>
+      <span class="tick"></span>
+    </label>
+  </div>
+
+  <div class="card-footer">
+    <span class="instruction" style="margin:0">
+      Choose every topic that matches the passage.
+    </span>
+
+    <button id="checkBtn" type="button">Check selected cards</button>
+  </div>
+
+  <p id="feedback" aria-live="polite"></p>
+</section>
+
+
+<!-- SKIMMING EXPLANATION -->
+<section>
+  <h2>What is Skimming?</h2>
+
+  <p>
+    <strong>Skimming</strong> is a fast reading technique that helps us understand the general idea or main message of a text without reading every single word.
+  </p>
+
+  <h3>How to Skim a Text</h3>
+  <ol class="steps">
+    <li><strong>Look at the title:</strong> It gives you an immediate hint about the topic.</li>
+    <li><strong>Read the introduction:</strong> Understand what the main idea is.</li>
+    <li><strong>Notice headings and subheadings:</strong> They outline main sections.</li>
+    <li><strong>Read the first sentences:</strong> Topic sentences introduce paragraph ideas.</li>
+    <li><strong>Look for repeated keywords:</strong> Keywords highlight key concepts.</li>
+    <li><strong>Check the conclusion:</strong> Reconfirm the overarching message.</li>
+  </ol>
+
+  <hr style="border:0;border-top:1px solid #e6e9ed;margin:22px 0">
+
+  <h3>Why is Skimming Important?</h3>
+  <ul class="benefits">
+    <li><strong>Saves time:</strong> Quickly grasp content from long passages.</li>
+    <li><strong>Finds main ideas:</strong> Focuses on key takeaways.</li>
+    <li><strong>Supports academic reading:</strong> Ideal for research papers and articles.</li>
+    <li><strong>Filters information:</strong> Determines whether text is relevant for your purpose.</li>
+  </ul>
+
+  <div class="remember">
+    <strong>REMEMBER!</strong>
+    <span>Skimming = General Idea</span>
+    <p style="margin:8px 0 0;color:#65717e;font-size:14px">Read smartly, not every word!</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+// 30 SECOND TIMER
+let remaining = 30;
+let timerInterval = null;
+
+const timer = document.getElementById('timer');
+const timerNote = document.getElementById('timerNote');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+function showTime() {
+  timer.textContent = remaining + (remaining === 1 ? ' SECOND' : ' SECONDS');
+}
+
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function startTimer() {
+  if (timerInterval) return;
+  if (remaining <= 0) remaining = 30;
+
+  startBtn.disabled = true;
+  timerNote.textContent = "Read quickly. Focus on key ideas, not every word!";
+  showTime();
+
+  timerInterval = setInterval(() => {
+    remaining--;
+    showTime();
+
+    if (remaining <= 0) {
+      stopTimer();
+      timer.textContent = "TIME'S UP!";
+      timerNote.textContent = "Now choose the cue cards that match the passage.";
+      startBtn.disabled = false;
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  stopTimer();
+  remaining = 30;
+  showTime();
+  timerNote.textContent = "Read quickly. Focus on key ideas, not every word!";
+  startBtn.disabled = false;
+}
+
+startBtn.addEventListener('click', startTimer);
+resetBtn.addEventListener('click', resetTimer);
+
+// SELECTABLE CUE CARDS
+const cards = [...document.querySelectorAll('.cue-card')];
+const count = document.getElementById('selectedCount');
+
+cards.forEach(card => {
+  card.addEventListener('change', () => {
+    card.classList.toggle('selected', card.querySelector('input').checked);
+    cards.forEach(c => c.classList.remove('correct', 'incorrect'));
+    const selected = cards.filter(c => c.querySelector('input').checked).length;
+    count.textContent = selected + ' selected';
+    document.getElementById('feedback').textContent = '';
+  });
+});
+
+// CHECK ANSWERS
+document.getElementById('checkBtn').addEventListener('click', () => {
+  const correct = ['1', '2', '3', '5', '7'];
+  cards.forEach(card => {
+    const value = card.querySelector('input').value;
+    card.classList.toggle('correct', correct.includes(value));
+    card.classList.toggle('incorrect', !correct.includes(value));
+  });
+
+  const selected = cards
+    .filter(c => c.querySelector('input').checked)
+    .map(c => c.querySelector('input').value);
+
+  const feedback = document.getElementById('feedback');
+
+  if (selected.length === 0) {
+    feedback.textContent = 'Please select at least one card first.';
+    feedback.style.color = '#a45b00';
+    return;
+  }
+
+  const isCorrect =
+    selected.length === correct.length &&
+    correct.every(v => selected.includes(v));
+
+  if (isCorrect) {
+    feedback.textContent = 'Excellent! All your selected cards are correct.';
+    feedback.style.color = '#087f5b';
+  } else {
+    feedback.textContent = 'Not quite. Think about the main topics in the passage and try again.';
+    feedback.style.color = '#b54735';
+  }
+});
+</script>
+
+</body>
+</html>

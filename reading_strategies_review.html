@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#172b46"><title>Lesson Wrap-up | Skimming & Scanning</title>
+<style>
+:root{--navy:#172b46;--teal:#167e79;--mint:#eaf5f2;--ink:#263445;--muted:#687789;--line:#e3e9ef;--paper:#fff;--bg:#f4f7fa;--gold:#d5a64d;--gold-d:#a77c32;--ok:#167e79;--bad:#c0504d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,"Segoe UI",Arial,sans-serif}
+.wrap{max-width:1000px;margin:auto;padding:28px 22px 55px}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:9px;color:var(--navy)}
+.mark{display:grid;place-items:center;width:30px;height:30px;background:var(--navy);color:#fff;border-radius:9px;font-weight:800}
+.hero{background:var(--navy);color:#fff;border-radius:22px;padding:38px 40px;position:relative;overflow:hidden;box-shadow:0 14px 35px #172b4618}
+.hero:after{content:"";position:absolute;width:270px;height:270px;border:1px solid #ffffff22;border-radius:50%;right:-50px;top:-155px;box-shadow:0 0 0 35px #ffffff09,0 0 0 70px #ffffff07}
+.eyebrow,.kicker{font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#9ed5cf}
+.hero h1{font-size:clamp(30px,5vw,46px);line-height:1.13;letter-spacing:-.035em;margin:9px 0 10px}
+.hero p{margin:0;color:#d4deea;max-width:650px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:21px}
+.pill{border:1px solid #ffffff3d;border-radius:99px;padding:5px 12px;font-size:12px;color:#edf5fa}
+.section{margin-top:28px}
+.heading{margin:0 2px 13px}.heading .kicker{color:var(--teal)}
+h2{font-size:24px;line-height:1.25;color:var(--navy);margin:4px 0 0;letter-spacing:-.02em}
+.intro{font-size:14px;color:var(--muted);margin:6px 0 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+
+/* flip cards */
+.flip{perspective:1000px;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;min-height:290px}
+.flip:focus-visible,.opt:focus-visible,.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.inner{position:relative;width:100%;height:100%;min-height:290px;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;padding:26px;border:1px solid var(--line);background:var(--paper);box-shadow:0 4px 16px #1c344808;overflow:hidden;display:flex;flex-direction:column}
+.face:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--teal)}
+.scan .face:before{background:#c69a4b}
+.front{align-items:flex-start;justify-content:center}
+.front h3{font-size:34px;color:var(--navy);margin:8px 0 12px;letter-spacing:-.02em}
+.num{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--teal)}
+.scan .num{color:var(--gold-d)}
+.hint{margin-top:auto;font-size:13px;color:var(--muted);font-weight:600}
+.front .big{font-size:17px;color:#526174;margin:0}
+.back{transform:rotateY(180deg);background:var(--mint)}
+.scan .back{background:#fbf5e8}
+.back p{margin:0 0 10px;color:#3f5163;font-size:16px}
+.back .purpose{margin-top:auto;padding-top:12px;border-top:1px solid #0001;font-size:14px;color:var(--muted)}
+.back .purpose b{color:var(--ink)}
+.recall{background:#f0f6f7;border:1px solid #dcebea;border-radius:14px;padding:19px 21px;margin-top:15px}
+.recall strong{display:block;color:var(--navy);font-size:15px;margin-bottom:5px}
+.recall p{margin:0;color:#526174;font-size:15px}
+.recall em{font-style:normal;color:var(--teal);font-weight:750}
+
+/* quiz */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 4px 16px #1c344808}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:6px}
+.bar{height:7px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;width:0;background:var(--teal);transition:width .4s}
+.scenario{font-size:clamp(19px,2.6vw,25px);line-height:1.4;color:var(--navy);margin:0 0 20px;font-weight:600;min-height:70px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt{border:2px solid var(--line);background:#fff;border-radius:14px;padding:18px;font:inherit;font-size:20px;font-weight:800;color:var(--navy);cursor:pointer;transition:.15s;text-align:center}
+.opt small{display:block;font-weight:500;font-size:13px;color:var(--muted);margin-top:2px}
+.opt:hover:not(:disabled){border-color:var(--teal);background:var(--mint)}
+.opt.right{border-color:var(--ok);background:#e3f4ee}
+.opt.wrong{border-color:var(--bad);background:#fbebea;animation:shake .35s}
+.opt:disabled{cursor:default}
+.feedback{min-height:56px;margin:16px 0 0;font-size:16px;color:#526174}
+.feedback b.ok{color:var(--ok)}.feedback b.no{color:var(--bad)}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:6px}
+.btn{background:var(--navy);color:#fff;border:0;border-radius:11px;padding:12px 22px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+.btn:hover{background:#243e5e}.btn[hidden]{display:none}
+.btn.ghost{background:transparent;color:var(--navy);border:2px solid var(--line)}
+.score{font-weight:800;color:var(--navy)}
+.result{text-align:center;padding:10px 0 4px}
+.result .big{font-size:56px;font-weight:800;color:var(--navy);line-height:1}
+.result p{color:#526174;margin:8px 0 18px}
+
+/* finish */
+.finish{margin-top:28px;position:relative;overflow:hidden;text-align:center;background:linear-gradient(135deg,#eaf5f2,#f5f8fc);border:1px solid #d6e9e4;border-radius:20px;padding:36px 22px 34px}
+.finish .star{font-size:30px;display:inline-block;animation:pop .65s ease-in-out infinite}
+.finish h2{font-size:clamp(26px,4vw,36px);margin:8px 0 7px}
+.finish p{margin:0 auto 16px;max-width:600px;color:#5d6d79;font-size:15px}
+.congrats{color:var(--teal);font-weight:800}
+.finish .btn{background:var(--teal)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50;width:100%;height:100%}
+.footer{text-align:center;color:#8995a2;font-size:11px;letter-spacing:.12em;margin-top:22px}
+@keyframes pop{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.22) rotate(7deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media(max-width:650px){.wrap{padding:16px 13px 35px}.top{font-size:10px}.hero{padding:28px 23px}.grid,.opts{grid-template-columns:1fr}.card{padding:20px}.flip,.inner{min-height:310px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style></head>
+<body><main class="wrap">
+
+<div class="top"><div class="brand"><span class="mark">R</span><span>Academic Skills Lab</span></div><span>Reading Skills · Lesson Wrap-up</span></div>
+
+<header class="hero"><div class="eyebrow">A quick review</div><h1>Skimming &amp; Scanning</h1><p>Before we finish, let us bring the two reading strategies together. Remember: effective readers choose a strategy according to what they need from a text.</p><div class="pills"><span class="pill">SKIMMING</span><span class="pill">SCANNING</span><span class="pill">READ WITH PURPOSE</span></div></header>
+
+<section class="section"><div class="heading"><div class="kicker">Quick recall</div><h2>Two strategies, two purposes</h2><p class="intro">Tap a card to flip it and see what it means.</p></div>
+<div class="grid">
+<button class="flip skim" aria-pressed="false" aria-label="Skimming card. Tap to flip.">
+ <div class="inner">
+  <div class="face front"><div class="num">GET THE BIG PICTURE</div><h3>Skimming</h3><p class="big">What is this text mainly about?</p><div class="hint">Tap to flip ↻</div></div>
+  <div class="face back"><div class="num">SKIMMING</div><p>Reading a text quickly to understand its <b>main idea or general meaning</b>. You do not need to read every word.</p><div class="purpose"><b>Use it when:</b> you want to know what an article, passage or paragraph is mainly about.</div></div>
+ </div>
+</button>
+<button class="flip scan" aria-pressed="false" aria-label="Scanning card. Tap to flip.">
+ <div class="inner">
+  <div class="face front"><div class="num">FIND A SPECIFIC DETAIL</div><h3>Scanning</h3><p class="big">Where is the exact information I need?</p><div class="hint">Tap to flip ↻</div></div>
+  <div class="face back"><div class="num">SCANNING</div><p>Moving your eyes quickly over a text to find <b>specific information</b>, such as a name, date, number, place or keyword.</p><div class="purpose"><b>Use it when:</b> you already know what information you are looking for.</div></div>
+ </div>
+</button>
+</div>
+<div class="recall"><strong>Remember the difference</strong><p><em>Skimming = Main idea.</em> &nbsp;|&nbsp; <em>Scanning = Specific information.</em><br>Both help you read efficiently. The right choice depends on your purpose.</p></div>
+</section>
+
+<section class="section" aria-label="Quick quiz"><div class="heading"><div class="kicker">Try it</div><h2>Which strategy would you use?</h2><p class="intro">Read each situation and choose the best strategy.</p></div>
+<div class="card" id="quiz">
+ <div id="play">
+  <div class="qtop"><span id="qcount">Question 1 of 8</span><span class="score">Score: <span id="score">0</span></span></div>
+  <div class="bar"><i id="prog"></i></div>
+  <p class="scenario" id="scenario"></p>
+  <div class="opts">
+   <button class="opt" data-a="skim">Skimming<small>main idea</small></button>
+   <button class="opt" data-a="scan">Scanning<small>specific detail</small></button>
+  </div>
+  <p class="feedback" id="fb" aria-live="polite"></p>
+  <div class="row"><span></span><button class="btn" id="next" hidden>Next question</button></div>
+ </div>
+ <div id="end" class="result" hidden>
+  <div class="big"><span id="final">0</span>/8</div>
+  <p id="msg"></p>
+  <button class="btn" id="again">Play again</button>
+ </div>
+</div>
+</section>
+
+<section class="finish" aria-label="Congratulations">
+ <div class="star" aria-hidden="true">✦</div><div class="kicker">You did it!</div>
+ <h2>Congratulations!<br><span class="congrats">You are now smart readers!</span></h2>
+ <p>You can now skim to understand the big picture and scan to locate the details. Keep practising, and make every reading purposeful.</p>
+ <button class="btn" id="party">Celebrate 🎉</button>
+</section>
+
+<footer class="footer">ACADEMIC SKILLS LAB · END OF LESSON</footer>
+</main>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+  // ---------- Flip cards ----------
+  document.querySelectorAll('.flip').forEach(function(c){
+    c.addEventListener('click',function(){
+      var on=c.classList.toggle('on');
+      c.setAttribute('aria-pressed',on);
+    });
+  });
+
+  // ---------- Quiz ----------
+  var Q=[
+    ["You want to know what a news article is mainly about before deciding to read it.","skim","You only need the general idea, so you skim."],
+    ["You need to find the opening time of a shop on its website.","scan","You know exactly what you want (a time), so you scan."],
+    ["You look at a bus timetable to find the 8:15 bus to Dhaka.","scan","A timetable is full of specific details. Scan for the number."],
+    ["Your teacher gives you a long passage. First, you want to understand the topic.","skim","Getting the topic and general meaning is skimming."],
+    ["You look through a restaurant menu for the price of a chicken burger.","scan","You are looking for one specific price, so you scan."],
+    ["You glance over a magazine article's headings and first lines to see if it is interesting.","skim","Checking the overall content quickly is skimming."],
+    ["You search a text for the year when a famous event happened.","scan","A year is a specific detail. Scan for the number."],
+    ["You quickly read a chapter to get the main idea before a class discussion.","skim","You want the big picture, not every detail. Skim."]
+  ];
+  var i=0,score=0,locked=false;
+  var $=function(id){return document.getElementById(id)};
+  var opts=document.querySelectorAll('.opt');
+
+  function shuffle(a){for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t}return a}
+  var order=shuffle(Q.slice());
+
+  function show(){
+    var q=order[i];locked=false;
+    $('scenario').textContent=q[0];
+    $('qcount').textContent='Question '+(i+1)+' of '+order.length;
+    $('prog').style.width=(i/order.length*100)+'%';
+    $('fb').innerHTML='';$('next').hidden=true;
+    opts.forEach(function(o){o.disabled=false;o.className='opt'});
+  }
+  opts.forEach(function(o){
+    o.addEventListener('click',function(){
+      if(locked)return;locked=true;
+      var q=order[i],ok=o.dataset.a===q[1];
+      opts.forEach(function(x){x.disabled=true;if(x.dataset.a===q[1])x.classList.add('right')});
+      if(ok){score++;$('score').textContent=score;$('fb').innerHTML='<b class="ok">Correct!</b> '+q[2]}
+      else{o.classList.remove('right');o.classList.add('wrong');$('fb').innerHTML='<b class="no">Not quite.</b> '+q[2]}
+      $('next').textContent=(i===order.length-1)?'See my result':'Next question';
+      $('next').hidden=false;$('next').focus();
+    });
+  });
+  $('next').addEventListener('click',function(){
+    i++;
+    if(i>=order.length){finish()}else{show()}
+  });
+  function finish(){
+    $('prog').style.width='100%';
+    $('play').hidden=true;$('end').hidden=false;
+    $('final').textContent=score;
+    var n=order.length,m;
+    if(score===n)m='Perfect! You choose the right strategy every time.';
+    else if(score>=n*0.7)m='Great work! You know when to skim and when to scan.';
+    else m='Good try! Remember: Skimming = main idea, Scanning = specific information.';
+    $('msg').textContent=m;
+    if(score>=n*0.7)burst();
+  }
+  $('again').addEventListener('click',function(){
+    i=0;score=0;$('score').textContent=0;order=shuffle(Q.slice());
+    $('end').hidden=true;$('play').hidden=false;show();
+  });
+  show();
+
+  // ---------- Confetti ----------
+  var cv=$('confetti'),ctx=cv.getContext('2d'),parts=[],raf=null;
+  var cols=['#d5a64d','#167e79','#9db9d2','#172b46','#e6c27a'];
+  function size(){cv.width=innerWidth;cv.height=innerHeight}
+  size();addEventListener('resize',size);
+  function burst(){
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    for(var k=0;k<200;k++){
+      parts.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*0.4,
+        w:6+Math.random()*6,h:8+Math.random()*8,vx:-1.5+Math.random()*3,vy:2+Math.random()*4,
+        r:Math.random()*6,vr:-.2+Math.random()*.4,c:cols[Math.floor(Math.random()*cols.length)]});
+    }
+    if(!raf)raf=requestAnimationFrame(tick);
+  }
+  var applauseAudio=null;
+  function playApplause(){
+    var AudioContextClass=window.AudioContext||window.webkitAudioContext;
+    if(!AudioContextClass){
+      console.error('Web Audio API is unavailable; applause could not be played.');
+      return;
+    }
+    var audio=applauseAudio||(applauseAudio=new AudioContextClass());
+    function scheduleApplause(){
+      var master=audio.createGain(),compressor=audio.createDynamicsCompressor();
+      var delay=audio.createDelay(),echoGain=audio.createGain();
+      master.gain.value=0.82;
+      compressor.threshold.value=-18;
+      compressor.knee.value=14;
+      compressor.ratio.value=4;
+      compressor.attack.value=0.006;
+      compressor.release.value=0.22;
+      master.connect(compressor);
+      compressor.connect(audio.destination);
+      delay.delayTime.value=0.095;
+      echoGain.gain.value=0.16;
+      delay.connect(echoGain);
+      echoGain.connect(master);
+
+      var clapDuration=0.15;
+      var clapBuffer=audio.createBuffer(1,Math.floor(audio.sampleRate*clapDuration),audio.sampleRate);
+      var clapSamples=clapBuffer.getChannelData(0);
+      for(var i=0;i<clapSamples.length;i++){
+        clapSamples[i]=(Math.random()*2-1)*Math.pow(1-i/clapSamples.length,2.5);
+      }
+
+      var start=audio.currentTime+0.03;
+      for(var clap=0;clap<44;clap++){
+        var at=start+clap*0.06+Math.random()*0.035;
+        var source=audio.createBufferSource(),warmFilter=audio.createBiquadFilter();
+        var brightFilter=audio.createBiquadFilter(),warmGain=audio.createGain();
+        var brightGain=audio.createGain(),strength=0.18+Math.random()*0.1;
+        source.buffer=clapBuffer;
+        warmFilter.type='bandpass';
+        warmFilter.frequency.value=650+Math.random()*350;
+        warmFilter.Q.value=0.7;
+        brightFilter.type='bandpass';
+        brightFilter.frequency.value=1450+Math.random()*700;
+        brightFilter.Q.value=0.65;
+        warmGain.gain.setValueAtTime(0.001,at);
+        warmGain.gain.linearRampToValueAtTime(strength,at+0.007);
+        warmGain.gain.exponentialRampToValueAtTime(0.001,at+clapDuration);
+        brightGain.gain.setValueAtTime(0.001,at);
+        brightGain.gain.linearRampToValueAtTime(strength*0.38,at+0.007);
+        brightGain.gain.exponentialRampToValueAtTime(0.001,at+clapDuration*0.8);
+        source.connect(warmFilter);
+        warmFilter.connect(warmGain);
+        warmGain.connect(master);
+        source.connect(brightFilter);
+        brightFilter.connect(brightGain);
+        brightGain.connect(master);
+        source.connect(delay);
+        source.start(at);
+        source.stop(at+clapDuration);
+      }
+    }
+    if(audio.state==='suspended'){
+      audio.resume().then(scheduleApplause,function(error){
+        console.error('Could not start applause:',error);
+      });
+    }else{
+      scheduleApplause();
+    }
+  }
+  function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts=parts.filter(function(p){return p.y<cv.height+30});
+    parts.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+    });
+    if(parts.length){raf=requestAnimationFrame(tick)}else{raf=null;ctx.clearRect(0,0,cv.width,cv.height)}
+  }
+  $('party').addEventListener('click',function(){
+    burst();
+    setTimeout(burst,130);
+    setTimeout(burst,260);
+    setTimeout(burst,390);
+    playApplause();
+  });
+})();
+</script>
+</body></html>

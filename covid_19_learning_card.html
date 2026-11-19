@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Reading & Quiz: COVID-19</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        /* 3D Flip Perspective Container */
+        .perspective-1000 {
+            perspective: 1200px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar for inner card content if needed */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+            border-radius: 9999px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Glowing effect on hover */
+        .glow-effect {
+            transition: all 0.3s ease;
+        }
+        .glow-effect:hover {
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2), 0 8px 10px -6px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4 sm:p-6 md:p-10 text-slate-800 antialiased">
+
+    <!-- Header Section -->
+    <header class="text-center mb-6 sm:mb-8 max-w-2xl">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 mb-3 shadow-sm">
+            <i class="fa-solid fa-graduation-cap"></i> Interactive Reading Activity
+        </span>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+            COVID-19 Comprehension
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-2">
+            Click the passage to flip the card and explore questions for Group A & Group B.
+        </p>
+    </header>
+
+    <!-- Main Flip Container -->
+    <main class="w-full max-w-4xl perspective-1000 min-h-[520px] sm:min-h-[480px]">
+        <div id="flipCard" class="flip-card-inner min-h-[520px] sm:min-h-[480px]">
+            
+            <!-- FRONT SIDE: Passage -->
+            <div class="flip-card-front bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-slate-100 flex flex-col justify-between cursor-pointer glow-effect group hover:border-blue-200">
+                <div>
+                    <!-- Badge & Action Hint -->
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                        <div class="flex items-center space-x-2 text-blue-600 font-semibold text-sm">
+                            <i class="fa-solid fa-book-open text-base"></i>
+                            <span>Reading Passage</span>
+                        </div>
+                        <span class="text-xs font-medium bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full flex items-center gap-1.5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            <span>Tap to Flip</span>
+                            <i class="fa-solid fa-rotate text-xs"></i>
+                        </span>
+                    </div>
+
+                    <!-- Passage Content -->
+                    <div class="space-y-4">
+                        <p class="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed sm:leading-loose font-normal">
+                            In March 2020, the World Health Organization declared COVID-19 a pandemic. The virus spread across the world, affecting millions of people. Schools closed, and many people stayed at home.
+                        </p>
+                        <p class="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed sm:leading-loose font-normal">
+                            People were advised to wear masks, wash their hands and maintain social distance. On 8 December 2020, the first COVID-19 vaccine was administered in the United Kingdom.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Footer Hint -->
+                <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-center text-xs sm:text-sm text-slate-400 group-hover:text-blue-500 transition-colors">
+                    <i class="fa-solid fa-hand-pointer mr-2 animate-bounce"></i> Click anywhere on this card to turn to the Questions
+                </div>
+            </div>
+
+            <!-- BACK SIDE: Questions & Answers -->
+            <div class="flip-card-back bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 flex flex-col justify-between custom-scroll overflow-y-auto max-h-[80vh] md:max-h-none">
+                <div>
+                    <!-- Top Navigation Bar -->
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">Task Questions</h2>
+                            <p class="text-xs text-slate-500">Click on any question to reveal the correct answer</p>
+                        </div>
+                        <button id="flipBackBtn" class="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-full transition-all duration-200">
+                            <i class="fa-solid fa-arrow-left"></i> Read Passage
+                        </button>
+                    </div>
+
+                    <!-- Two-Column Group Layout -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Group A (Team A – Skimming) -->
+                        <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md">A</span>
+                                    <div>
+                                        <h3 class="font-bold text-indigo-950 text-base sm:text-lg">Group A</h3>
+                                        <p class="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Team A – Skimming</p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <!-- Q1 -->
+                                    <div class="qa-card bg-white rounded-xl p-3.5 border border-indigo-100 shadow-sm cursor-pointer hover:border-indigo-300 transition-all duration-200" onclick="toggleAnswer(this)">
+                                        <div class="flex justify-between items-start gap-2">
+                                            <p class="text-xs sm:text-sm font-semibold text-slate-800">1. What is the passage mainly about?</p>
+                                            <i class="fa-solid fa-chevron-down text-slate-400 text-xs mt-1 transition-transform duration-300 transform-icon"></i>
+                                        </div>
+                                        <div class="answer-box hidden mt-2.5 pt-2.5 border-t border-dashed border-slate-100 text-xs sm:text-sm text-indigo-700 font-medium bg-indigo-50/70 p-2.5 rounded-lg">
+                                            <span class="text-xs font-bold text-indigo-400 block mb-0.5 uppercase">Answer:</span>
+                                            The COVID-19 pandemic.
+                                        </div>
+                                    </div>
+
+                                    <!-- Q2 -->
+                                    <div class="qa-card bg-white rounded-xl p-3.5 border border-indigo-100 shadow-sm cursor-pointer hover:border-indigo-300 transition-all duration-200" onclick="toggleAnswer(this)">
+                                        <div class="flex justify-between items-start gap-2">
+                                            <p class="text-xs sm:text-sm font-semibold text-slate-800">2. What safety measures did people follow?</p>
+                                            <i class="fa-solid fa-chevron-down text-slate-400 text-xs mt-1 transition-transform duration-300 transform-icon"></i>
+                                        </div>
+                                        <div class="answer-box hidden mt-2.5 pt-2.5 border-t border-dashed border-slate-100 text-xs sm:text-sm text-indigo-700 font-medium bg-indigo-50/70 p-2.5 rounded-lg">
+                                            <span class="text-xs font-bold text-indigo-400 block mb-0.5 uppercase">Answer:</span>
+                                            Wearing masks, washing hands and maintaining social distance.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group B (Team B – Scanning) -->
+                        <div class="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-md">B</span>
+                                    <div>
+                                        <h3 class="font-bold text-emerald-950 text-base sm:text-lg">Group B</h3>
+                                        <p class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Team B – Scanning</p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <!-- Q1 -->
+                                    <div class="qa-card bg-white rounded-xl p-3.5 border border-emerald-100 shadow-sm cursor-pointer hover:border-emerald-300 transition-all duration-200" onclick="toggleAnswer(this)">
+                                        <div class="flex justify-between items-start gap-2">
+                                            <p class="text-xs sm:text-sm font-semibold text-slate-800">1. In which month and year was COVID-19 declared a pandemic?</p>
+                                            <i class="fa-solid fa-chevron-down text-slate-400 text-xs mt-1 transition-transform duration-300 transform-icon"></i>
+                                        </div>
+                                        <div class="answer-box hidden mt-2.5 pt-2.5 border-t border-dashed border-slate-100 text-xs sm:text-sm text-emerald-700 font-medium bg-emerald-50/70 p-2.5 rounded-lg">
+                                            <span class="text-xs font-bold text-emerald-400 block mb-0.5 uppercase">Answer:</span>
+                                            March 2020.
+                                        </div>
+                                    </div>
+
+                                    <!-- Q2 -->
+                                    <div class="qa-card bg-white rounded-xl p-3.5 border border-emerald-100 shadow-sm cursor-pointer hover:border-emerald-300 transition-all duration-200" onclick="toggleAnswer(this)">
+                                        <div class="flex justify-between items-start gap-2">
+                                            <p class="text-xs sm:text-sm font-semibold text-slate-800">2. On which date was the first vaccine administered in the UK?</p>
+                                            <i class="fa-solid fa-chevron-down text-slate-400 text-xs mt-1 transition-transform duration-300 transform-icon"></i>
+                                        </div>
+                                        <div class="answer-box hidden mt-2.5 pt-2.5 border-t border-dashed border-slate-100 text-xs sm:text-sm text-emerald-700 font-medium bg-emerald-50/70 p-2.5 rounded-lg">
+                                            <span class="text-xs font-bold text-emerald-400 block mb-0.5 uppercase">Answer:</span>
+                                            8 December 2020.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Footer Action Bar -->
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                    <span><i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> Click questions to toggle answers</span>
+                    <button onclick="revealAllAnswers()" class="text-blue-600 hover:text-blue-800 font-semibold transition-colors">
+                        Reveal All
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 text-center text-xs text-slate-400">
+        Interactive Learning Card &bull; Accessible on all devices
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const flipCard = document.getElementById('flipCard');
+        const flipCardFront = document.querySelector('.flip-card-front');
+        const flipBackBtn = document.getElementById('flipBackBtn');
+
+        // Flip Card to Back (Questions View) when clicking front card
+        flipCardFront.addEventListener('click', () => {
+            flipCard.classList.add('flipped');
+        });
+
+        // Flip Card back to Front (Passage View)
+        flipBackBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevents triggering parent events
+            flipCard.classList.remove('flipped');
+        });
+
+        // Toggle Individual Answer Visibility
+        function toggleAnswer(cardElement) {
+            const answerBox = cardElement.querySelector('.answer-box');
+            const icon = cardElement.querySelector('.transform-icon');
+
+            if (answerBox.classList.contains('hidden')) {
+                answerBox.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+                cardElement.classList.add('ring-2', 'ring-blue-400/30');
+            } else {
+                answerBox.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+                cardElement.classList.remove('ring-2', 'ring-blue-400/30');
+            }
+        }
+
+        // Helper function to reveal all answers at once
+        let allRevealed = false;
+        function revealAllAnswers() {
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            const icons = document.querySelectorAll('.transform-icon');
+            
+            allRevealed = !allRevealed;
+            
+            answerBoxes.forEach((box, idx) => {
+                if (allRevealed) {
+                    box.classList.remove('hidden');
+                    icons[idx].style.transform = 'rotate(180deg)';
+                } else {
+                    box.classList.add('hidden');
+                    icons[idx].style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
